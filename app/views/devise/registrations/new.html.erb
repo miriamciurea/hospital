@@ -22,6 +22,10 @@
                 required: true,
                 input_html: { autocomplete: "last-name" } %>
     <%= f.input :doctor, as: :boolean %>
+
+    <% if resource.doctor %>
+      <%= f.collection_select :specialization_id, Specialization.all, :id, :name, { prompt: 'Select specialization' } %>
+    <% end %>
   </div>
 
   <div class="form-actions">
