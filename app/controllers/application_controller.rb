@@ -11,4 +11,10 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :doctor, :specialization_id])
   end
 
+  protected
+
+  def after_sign_out_path_for(*)
+    new_user_session_path
+  end
+
 end

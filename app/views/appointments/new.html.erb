@@ -1,0 +1,6 @@
+<h1>New Appointment</h1>
+<%= form_with(model: @appointment, url: appointments_path) do |form| %>
+  <%= form.collection_select :patient_id, @patients, :id, :full_name, prompt: "Select Patient" %>
+  <%= form.datetime_local_field :appointment_date %>
+  <%= form.submit "Create Appointment" %>
+<% end %>
