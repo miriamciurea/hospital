@@ -23,9 +23,13 @@
                 input_html: { autocomplete: "last-name" } %>
     <%= f.input :doctor, as: :boolean %>
 
-    <% if resource.doctor %>
-      <%= f.collection_select :specialization_id, Specialization.all, :id, :name, { prompt: 'Select specialization' } %>
-    <% end %>
+    <%# <% if resource.doctor %>
+      <%# <%= f.collection_select :specialization_id, Specialization.all, :id, :name, { prompt: 'Select specialization' } %>
+      <div data-controller="specialization-toggle" data-specialization-toggle-target="specialization" class="hidden">
+        <%= f.collection_select :specialization_id, Specialization.all, :id, :name, { prompt: "Select specialization" } %>
+      </div>
+    <%# <% end %>
+
   </div>
 
   <div class="form-actions">
