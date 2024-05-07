@@ -7,3 +7,14 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+# Define an array of specialization names
+p "Deleting all specializations..."
+Specialization.destroy_all
+p "Seeding the database..."
+specialization_names = ['receptionist', 'general practitioner', 'cardiologist', 'dermatologist', 'pediatrician']
+
+# Create specializations
+specialization_names.each do |name|
+  Specialization.find_or_create_by(name: name)
+end
