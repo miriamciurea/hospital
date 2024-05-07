@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  before_validation :set_default_specialization
+
   belongs_to :specialization, optional: true
   has_many :appointments
 
@@ -15,7 +17,11 @@ class User < ApplicationRecord
   private
 
   def doctor?
-    doctor
+    doctor.present? && doctor
+  end
+
+  def set_default_specialization
+    self.specialization ||= Specialization.find_by(name: 'receptionist')
   end
 
 end
