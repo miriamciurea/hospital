@@ -21,14 +21,15 @@
     <%= f.input :last_name,
                 required: true,
                 input_html: { autocomplete: "last-name" } %>
-    <%= f.input :doctor, as: :boolean %>
 
-    <%# <% if resource.doctor %>
-      <%# <%= f.collection_select :specialization_id, Specialization.all, :id, :name, { prompt: 'Select specialization' } %>
-      <div data-controller="specialization-toggle" data-specialization-toggle-target="specialization" class="hidden">
-        <%= f.collection_select :specialization_id, Specialization.all, :id, :name, { prompt: "Select specialization" } %>
-      </div>
-    <%# <% end %>
+<div data-controller="specialization-toggle">
+  <div class="" data-action="click->specialization-toggle#toggle">
+    <%= f.input :doctor, as: :boolean %>
+  </div>
+  <div class="hidden" data-specialization-toggle-target="toggableElement">
+    <%= f.collection_select :specialization_id, Specialization.all, :id, :name, { prompt: "Select specialization" } %>
+  </div>
+</div>
 
   </div>
 
