@@ -1,0 +1,9 @@
+<h1>Edit Appointment</h1>
+
+<%= simple_form_for @appointment, url: user_patient_appointment_path(user_id: @user.id, patient_id: @patient.id, id: @appointment.id), method: :patch do |form| %>
+  <%= form.collection_select :user_id, @doctors, :id, lambda { |patient| "#{patient.first_name} #{patient.last_name}" }, prompt: "Select Doctor" %>
+  <%= form.collection_select :patient_id, @patients, :id, lambda { |patient| "#{patient.first_name} #{patient.last_name}" }, prompt: "Select Patient" %>
+  <%= form.datetime_local_field :appointment_date %>
+
+  <%= form.button :submit, "Update Appointment" %>
+<% end %>
