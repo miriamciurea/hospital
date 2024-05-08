@@ -1,0 +1,29 @@
+<h1>Appointments</h1>
+
+<% if @appointments.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Patient</th>
+        <th>Doctor</th>
+        <th>Specialization</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @appointments.order(appointment_date: :asc).each do |appointment| %>
+        <tr>
+          <td><%= appointment.appointment_date.strftime('%B %d, %Y %H:%M') %></td>
+          <td><%= appointment.patient.first_name %> <%= appointment.patient.last_name %></td>
+          <td><%= appointment.user.first_name %> <%= appointment.user.last_name %></td>
+          <td><%= appointment.user.specialization.name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No appointments available.</p>
+<% end %>
+
+
+<%= link_to "Make an appointment", new_user_patient_appointment_path(user_id: @user.id, patient_id: 1) %>

@@ -2,6 +2,7 @@ class UsersController < ApplicationController
 
   def show
     @user = current_user
+    @patient = Patient.new
     @specialization = Specialization.find(@user.specialization_id).name
     if @user.doctor
 
