@@ -4,9 +4,11 @@ Rails.application.routes.draw do
   }
   # resources :users, only: [:index, :show]
   root to: "users#show"
-  resources :users
-  resources :patients do
-    resources :appointments
+  resources :patients, only: [:index, :show, :destroy]
+  resources :users, only: [:index, :show] do
+    resources :patients, only: [:new, :create, :edit, :update] do
+      resources :appointments, only: [:new, :create, :edit, :update]
+    end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
