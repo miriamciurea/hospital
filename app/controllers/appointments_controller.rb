@@ -6,6 +6,7 @@ before_action :set_user_and_patient, only: [:new, :create]
     @user = current_user # Assuming you have a current_user method to get the logged-in user
     # @patient = Patient.find(params[:patient_id]) # Example: Finding a patient by its ID
     # @appointments = @patient.appointments # Assuming you want to fetch appointments for this patient
+    @appointments = Appointment.all
   end
 
   def new
