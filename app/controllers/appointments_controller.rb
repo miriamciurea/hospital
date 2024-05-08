@@ -31,7 +31,6 @@ before_action :set_user_and_patient, only: [:new, :create]
   end
 
   def create
-    p "are you working?????????????????????"
     @appointment = Appointment.new(appointment_params)
     if @appointment.save
       redirect_to appointments_path, notice: 'Appointment created successfully.'
