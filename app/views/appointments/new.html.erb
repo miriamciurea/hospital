@@ -1,6 +1,13 @@
 <h1>New Appointment</h1>
-<%= form_with(model: @appointment, url: appointments_path) do |form| %>
-  <%= form.collection_select :patient_id, @patients, :id, :full_name, prompt: "Select Patient" %>
+
+<%= simple_form_for @appointment, url: user_patient_appointments_path(user_id: 1, patient_id: 1) do |form| %>
+
+  <%= form.collection_select :patient_id, @patients, :id, lambda { |patient| "#{patient.first_name} #{patient.last_name}" }, prompt: "Select Patient" %>
+
+  <%= form.collection_select :user_id, @doctors, :id, lambda { |doctor| "#{doctor.first_name} #{doctor.last_name} | (#{doctor.specialization.name})" }, prompt: "Select Doctor" %>
+
   <%= form.datetime_local_field :appointment_date %>
-  <%= form.submit "Create Appointment" %>
+
+  <%= form.button :submit, "Create Appointment" %>
+
 <% end %>
