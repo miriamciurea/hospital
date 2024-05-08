@@ -1,5 +1,5 @@
 class AppointmentsController < ApplicationController
-before_action :set_user_and_patient, only: [:new, :create]
+  before_action :set_user_and_patient, only: [:new, :create, :edit, :update]
 
   def index
     # Example code to find user and patient
@@ -38,6 +38,28 @@ before_action :set_user_and_patient, only: [:new, :create]
       p @appointment.errors.full_messages
       render :new
     end
+  end
+
+  def edit
+    @appointment = Appointment.find(params[:id])
+    @doctors = User.where(doctor: true)
+    @patients = Patient.all
+  end
+
+  def update
+    @appointment = Appointment.find(params[:id])
+    if @appointment.update(appointment_params)
+      # redirect_to user_patient_appointment_path(user_id: @user.id, patient_id: @patient.id, id: @appointment.id), notice: 'Appointment updated successfully.'
+      redirect_to appointments_path, notice: 'Appointment updated successfully.'
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @appointment = Appointment.find(params[:id])
+    @appointment.destroy
+    redirect_to appointments_path, notice: 'Appointment deleted successfully.'
   end
 
   private

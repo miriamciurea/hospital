@@ -12,6 +12,11 @@
     <p><%= app.appointment_date.strftime('%B %d, %Y %H:%M') %></p>
     <p><%= app.patient.first_name %> <%= app.patient.last_name %></p>
     <p><%= app.user.first_name %> <%= app.user.last_name %> | <%= app.user.specialization.name %></p>
+    <p><%= link_to "Edit", edit_user_patient_appointment_path(user_id: app.user.id, patient_id: app.patient.id, id: app.id) %></p>
+    <p><%= link_to "Delete",
+      appointment_path(app),
+      data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}
+    %> </p>
 <% end %>
 
 <%= link_to 'Back', patients_path %>

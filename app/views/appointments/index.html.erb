@@ -17,6 +17,12 @@
           <td><%= appointment.patient.first_name %> <%= appointment.patient.last_name %></td>
           <td><%= appointment.user.first_name %> <%= appointment.user.last_name %></td>
           <td><%= appointment.user.specialization.name %></td>
+          <td><%= link_to "Edit", edit_user_patient_appointment_path(user_id: appointment.user.id, patient_id: appointment.patient.id, id: appointment.id) %></td>
+           <td><%= link_to "Delete",
+            appointment_path(appointment),
+            data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}
+          %>
+          </td>
         </tr>
       <% end %>
     </tbody>
