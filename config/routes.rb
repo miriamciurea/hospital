@@ -8,10 +8,12 @@ Rails.application.routes.draw do
   delete '/patients/:id', to: 'patients#destroy', as: 'delete_patient'
   resources :patients, only: [:show, :index, :new, :create, :edit, :update]
   resources :users, only: [:index, :show] do
+    resources :specializations, only: [:show]
     resources :patients, only: [:show] do
       resources :appointments, only: [:new, :create, :edit, :update]
     end
   end
+  resources :appointments, only: [:destroy, :index, :show]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
