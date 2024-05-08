@@ -18,6 +18,7 @@ class PatientsController < ApplicationController
     @patient = Patient.new(patient_params)
     if @patient.save
       redirect_to @patient, notice: 'Patient was successfully created.'
+      p "Patient was successfully created."
     else
       render 'new'
     end
@@ -37,9 +38,10 @@ class PatientsController < ApplicationController
   end
 
   def destroy
+    p "Patient was successfully deleted."
     @patient = Patient.find(params[:id])
     @patient.destroy
-    redirect_to patients_path
+    redirect_to patients_path, notice: 'Patient was successfully deleted.'
   end
 
   private

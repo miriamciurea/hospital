@@ -4,9 +4,11 @@ Rails.application.routes.draw do
   }
   # resources :users, only: [:index, :show]
   root to: "users#show"
-  resources :patients, only: [:index, :show, :destroy]
+  # resources :patients, only: [:destroy]
+  delete '/patients/:id', to: 'patients#destroy', as: 'delete_patient'
+  resources :patients, only: [:show, :index, :new, :create, :edit, :update]
   resources :users, only: [:index, :show] do
-    resources :patients, only: [:new, :create, :edit, :update] do
+    resources :patients, only: [:show] do
       resources :appointments, only: [:new, :create, :edit, :update]
     end
   end
