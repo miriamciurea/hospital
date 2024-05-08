@@ -1,1 +1,36 @@
-hi doctor
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <div id="chart_div"></div>
+
+<script>
+
+  google.charts.load('current', {
+  packages: ['corechart', 'bar']
+});
+google.charts.setOnLoadCallback(drawBasic);
+
+function drawBasic() {
+  // Assuming @data is an array of arrays where each inner array represents a row of data
+  var data = google.visualization.arrayToDataTable(<%= raw @data.to_json %>);
+
+  var options = {
+    title: 'Motivation Level Throughout the Day',
+    hAxis: {
+      title: 'Time of Day',
+      format: 'h:mm a',
+      viewWindow: {
+        min: [7, 30, 0],
+        max: [17, 30, 0]
+      }
+    },
+    vAxis: {
+      title: 'Rating (scale of 1-10)'
+    }
+  };
+
+  var chart = new google.visualization.ColumnChart(
+    document.getElementById('chart_div'));
+
+  chart.draw(data, options);
+}
+
+</script>
