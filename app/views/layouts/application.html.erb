@@ -48,6 +48,7 @@
       <br>
       <div class="footer p-3">
         <% if current_user %>
+          <%= link_to "Home",  user_path(current_user), class: "mr-3", style: "text-decoration: none; color: #546E7A" %> |
           <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, style: "text-decoration: none; color: #546E7A" %>
         <% end %>
       </div>
