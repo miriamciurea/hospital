@@ -1,6 +1,27 @@
-hi receptionist!
-<br>
+<%#= link_to "Patients", patients_path %>
+<%#= link_to "Appointments", appointments_path %>
 
-<%= link_to "Patients", patients_path %>
-<%= link_to "Appointments", appointments_path %>
 <%#= link_to "Make an appointment", new_user_patient_appointment_path(user_id: @user.id, patient_id: @patient.id) %>
+
+
+<div class="row">
+
+    <div class="col-md-12 text-center">
+      <h1>Receptionist Dashboard</h1>
+        <%= @user.first_name %> <%= @user.last_name %>
+        <br>
+    </div>
+
+</div>
+
+      <%= link_to patients_path do %>
+        <div class="col-md-12 text-center p-5 r-links">
+          <h4>PATIENTS</h4>
+        </div>
+      <% end %>
+
+      <%= link_to appointments_path do %>
+        <div class="col-md-12 text-center p-5 r-links">
+          <h4>APPOINTMENTS</h4>
+        </div>
+      <% end %>
