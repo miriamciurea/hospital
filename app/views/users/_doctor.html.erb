@@ -1,36 +1,37 @@
+  <%= @user.first_name %> <%= @user.last_name %>
+
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <div id="chart_div"></div>
+  <div id="appointments_chart"></div>
 
 <script>
 
-  google.charts.load('current', {
-  packages: ['corechart', 'bar']
-});
-google.charts.setOnLoadCallback(drawBasic);
+  google.charts.load('current', { packages: ['corechart'] });
+  google.charts.setOnLoadCallback(drawChart);
 
-function drawBasic() {
-  // Assuming @data is an array of arrays where each inner array represents a row of data
-  var data = google.visualization.arrayToDataTable(<%= raw @data.to_json %>);
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable(<%= raw @data.to_json %>);
 
-  var options = {
-    title: 'Motivation Level Throughout the Day',
-    hAxis: {
-      title: 'Time of Day',
-      format: 'h:mm a',
-      viewWindow: {
-        min: [7, 30, 0],
-        max: [17, 30, 0]
+    var options = {
+      title: 'Upcoming Appointments',
+      hAxis: {
+        title: 'Date'
+      },
+      vAxis: {
+        title: 'Number of Appointments'
       }
-    },
-    vAxis: {
-      title: 'Rating (scale of 1-10)'
-    }
-  };
+    };
 
-  var chart = new google.visualization.ColumnChart(
-    document.getElementById('chart_div'));
-
-  chart.draw(data, options);
-}
+    var chart = new google.visualization.LineChart(document.getElementById('appointments_chart'));
+    chart.draw(data, options);
+  }
 
 </script>
+
+<h2>Upcoming Appointments</h2>
+<ul>
+  <% @appointments.each do |appointment| %>
+    <li>
+      <%= appointment.appointment_date.strftime('%A, %B %d, %Y') %>: <%= link_to "#{appointment.patient.first_name} #{appointment.patient.last_name}", patient_path(appointment.patient) %>
+    </li>
+  <% end %>
+</ul>

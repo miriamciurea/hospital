@@ -4,32 +4,29 @@ class UsersController < ApplicationController
     @user = current_user
     @patient = Patient.new
     @specialization = Specialization.find(@user.specialization_id).name
-    if @user.doctor
-      @appointments = Appointment.where(doctor_id: @user.id)
-    end
 
     if @user.doctor == true
       appointments = Appointment.where(user_id: current_user.id)
-      # count = appointments.group_by_day(:appointment_date).count
-      @data = [['timeofday', 'number']] + appointments.group_by_day(:appointment_date).count.map { |k, v| [k.to_date, v] }
-      respond_to do |format|
-        p @data
-        format.html
-        format.json { render json: @data }
-      end
+      @data = generate_appointments_data(appointments)
+      @appointments = appointments.where('appointment_date >= ?', Date.today)
     end
-
-    # if @user.patient
-    #   @appointments = Appointment.where(patient_id: @user.id)
-    # end
-
   end
 
-  # def chart_data
-  #   appointments = Appointment.where(doctor_id: current_user.id)
-  #   # count = appointments.group_by_day(:appointment_date).count
-  #   @data = appointments.group_by_day(:appointment_date).count.map { |k, v| [k.to_date, v] }
-  #   render json: data
-  # end
+  private
+
+  def generate_appointments_data(appointments)
+    appointments_data = appointments.where('appointment_date >= ?', Date.today)
+                                   .group_by_day(:appointment_date)
+                                   .count
+
+    data = [['Date', 'Number of Appointments']]
+    (0..6).each do |offset|
+      date = Date.today + offset
+      count = appointments_data[date] || 0
+      p "Date: #{date}, Count: #{count}"
+      data << [date, count]
+    end
+    data
+  end
 
 end
