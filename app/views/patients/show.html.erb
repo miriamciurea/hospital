@@ -8,17 +8,32 @@
 <br>
 <br>
 <% appointments = Appointment.where(patient_id: @patient.id) || [] %>
-<% appointments.each do |app| %>
-    <p><%= app.appointment_date.strftime('%B %d, %Y %H:%M') %> <%= app.user.first_name %> <%= app.user.last_name %> | <%= app.user.specialization.name %>
-    <% if current_user.doctor == false %>
-      <%= link_to "Edit", edit_user_patient_appointment_path(user_id: app.user.id, patient_id: app.patient.id, id: app.id) %> <%= link_to "Delete",
-        appointment_path(app),
-        data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}
-      %>
-    <% end %>
-    </p>
-    <%#= app.appointment_date.strftime('%A, %B %d, %Y') %>
+<div class="table-container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Patient</th>
+        <th>Doctor</th>
+        <th>Specialization</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% appointments.order(appointment_date: :asc).each do |appointment| %>
+        <tr>
+          <td><%= appointment.appointment_date.strftime('%B %d, %Y %H:%M') %></td>
+          <td><%= appointment.patient.first_name %> <%= appointment.patient.last_name %></td>
+          <td><%= appointment.user.first_name %> <%= appointment.user.last_name %></td>
+          <td><%= appointment.user.specialization.name %></td>
+          <td><%= link_to "Edit", edit_user_patient_appointment_path(user_id: appointment.user.id, patient_id: appointment.patient.id, id: appointment.id) %></td>
+          <td><%= link_to "Delete", appointment_path(appointment), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
-<% end %>
 
 <%= link_to 'Back', patients_path %>
