@@ -10,7 +10,6 @@ class AppointmentsController < ApplicationController
   end
 
   def new
-    # p "tel me you see meeeeeeeeeeeee"
     # @appointment = @patient.appointments.build
     @appointment = Appointment.new
     @patients = Patient.all
@@ -18,6 +17,7 @@ class AppointmentsController < ApplicationController
     @doctors = User.where(doctor: true)
     @user = User.new
     @patient = Patient.new
+    # binding.pry
     # @appointment = Appointment.new
     # @patient = Patient.new
     # @user = current_user
@@ -26,19 +26,35 @@ class AppointmentsController < ApplicationController
     # @patients = Patient.all
   end
 
-  def show
-    @appointment = Appointment.find(params[:id])
-  end
-
   def create
-    @appointment = Appointment.new(appointment_params)
+    # p "tel me you see meeeeeeeeeeeee"
+    # @appointment = Appointment.new(appointment_params)
+    # if @appointment.save
+    #   redirect_to appointments_path, notice: 'Appointment created successfully.'
+    # else
+    #   p @appointment.errors.full_messages
+    #   render :new
+    # end
+    p "tel me you see meeeeeeeeeeeee"
+    # Parse the appointment_date attribute into a DateTime object
+    appointment_date = DateTime.parse(appointment_params[:appointment_date])
+
+    # Create a new appointment with the parsed appointment_date
+    @appointment = Appointment.new(appointment_params.merge(appointment_date: appointment_date))
+
     if @appointment.save
       redirect_to appointments_path, notice: 'Appointment created successfully.'
     else
       p @appointment.errors.full_messages
+          binding.pry
       render :new
     end
   end
+
+  def show
+    @appointment = Appointment.find(params[:id])
+  end
+
 
   def edit
     @appointment = Appointment.find(params[:id])

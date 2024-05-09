@@ -15,6 +15,7 @@ class PatientsController < ApplicationController
   end
 
   def create
+    binding.pry
     @patient = Patient.new(patient_params)
     if @patient.save
       redirect_to @patient, notice: 'Patient was successfully created.'
