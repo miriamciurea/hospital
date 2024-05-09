@@ -1,1 +1,37 @@
-hi doctor
+  <%= @user.first_name %> <%= @user.last_name %>
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <div id="appointments_chart"></div>
+
+<script>
+
+  google.charts.load('current', { packages: ['corechart'] });
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable(<%= raw @data.to_json %>);
+
+    var options = {
+      title: 'Upcoming Appointments',
+      hAxis: {
+        title: 'Date'
+      },
+      vAxis: {
+        title: 'Number of Appointments'
+      }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('appointments_chart'));
+    chart.draw(data, options);
+  }
+
+</script>
+
+<h2>Upcoming Appointments</h2>
+<ul>
+  <% @appointments.each do |appointment| %>
+    <li>
+      <%= appointment.appointment_date.strftime('%A, %B %d, %Y') %>: <%= link_to "#{appointment.patient.first_name} #{appointment.patient.last_name}", patient_path(appointment.patient) %>
+    </li>
+  <% end %>
+</ul>
