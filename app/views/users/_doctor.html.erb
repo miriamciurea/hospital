@@ -1,7 +1,29 @@
-  <%= @user.first_name %> <%= @user.last_name %>
+<div class="row">
 
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <div id="appointments_chart"></div>
+
+  <div class="col-md-12 text-center">
+    <h1>Doctor Dashboard</h1>
+      <%= @user.first_name %> <%= @user.last_name %> | <%= @user.specialization.name %>
+      <br>
+  </div>
+
+  <div class="col-md-12 text-center p-5">
+      <div id="appointments_chart"></div>
+  </div>
+
+  <div class="col-md-12 text-left p-5">
+    <h2>Upcoming Appointments</h2>
+    <ul>
+      <% @appointments.each do |appointment| %>
+        <li>
+          <%= appointment.appointment_date.strftime('%A, %B %d, %Y') %>: <%= link_to "#{appointment.patient.first_name} #{appointment.patient.last_name}", patient_path(appointment.patient) %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+</div>
 
 <script>
 
@@ -26,12 +48,3 @@
   }
 
 </script>
-
-<h2>Upcoming Appointments</h2>
-<ul>
-  <% @appointments.each do |appointment| %>
-    <li>
-      <%= appointment.appointment_date.strftime('%A, %B %d, %Y') %>: <%= link_to "#{appointment.patient.first_name} #{appointment.patient.last_name}", patient_path(appointment.patient) %>
-    </li>
-  <% end %>
-</ul>

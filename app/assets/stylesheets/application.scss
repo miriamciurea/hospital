@@ -16,5 +16,20 @@
 }
 
 .spacer {
-  height: 20px; /* Adjust the height as needed */
+  height: 20px;
+}
+
+li, ul {
+  list-style-type: none;
+  margin-left: 0;
+}
+
+a {
+  color: #253854;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
